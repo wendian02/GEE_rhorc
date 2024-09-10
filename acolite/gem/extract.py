@@ -206,13 +206,18 @@ def extract(st_lon, st_lat, sdate,
                 gemfile = '{}/{}_GEM_L2A.nc'.format(obase, bname)
 
         ## check time difference
-        ## dates is a list of fractional years
+        ## dates is a list of fractional years (or 1 str date)
         ## only keep scenes within max_diff_h of an element of dates
         if check_dates is not None:
+            from datetime import timedelta
+            if isinstance(check_dates, str):
+                check_dates = dateutil.parser.parse(check_dates)
+            check_dates_utc = check_dates - timedelta(hours=8)
+            check_dates_yf = ac.shared.isodate_to_yday(check_dates_utc, return_yf=True)
             yf = ac.shared.isodate_to_yday(dt, return_yf=True)
             ylen = (datetime.datetime(dt.year+1, 1, 1) - datetime.datetime(dt.year, 1, 1)).days
             maxd = ((1/ylen) / 24) * max_diff_h
-            mind = np.nanmin(np.abs(check_dates-yf))
+            mind = np.nanmin(np.abs(check_dates_yf - yf))
             if mind>maxd:
                 if verbosity > 1: print('Skipping {} {}>{}'.format(pid, mind, maxd))
                 continue
