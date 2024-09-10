@@ -50,4 +50,4 @@ if sources == ['Sentinel-2']:
         df_match_all[a] = df_match_all[a].fillna(df_match_all[b])
     df_match_all = df_match_all.drop(S2B_unmatch_band, axis=1)
 
-df_match_all.to_csv(f"{os.path.basename(points_csv_fullfn)}_match_all.csv", index=False)
+df_match_all.to_csv(f"{os.path.splitext(points_csv_fullfn)[0]}_match_all.csv", index=False)
