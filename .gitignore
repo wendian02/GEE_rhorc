@@ -59,6 +59,6 @@ __pycache__/
 
 # GEE output file
 GEE_rhorc/*.csv
-GEE_rhorc/input_nc/*
-GEE_rhorc/output_acolite/*
-GEE_rhorc/output_csv/*
+GEE_rhorc/input_nc/
+GEE_rhorc/output_acolite/
+GEE_rhorc/output_csv/
